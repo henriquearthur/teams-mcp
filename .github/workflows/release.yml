@@ -2,16 +2,25 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - ".mcp.json"
+      - ".vscode/**"
+      - ".github/dependabot.yml"
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   publish-npm:
-    if: github.repository == 'henriquearthur/teams-mcp'
+    if: github.repository == 'henriquearthur/teams-mcp' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,9 +30,33 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      - name: Check tag matches package.json version
-        run: test "${GITHUB_REF_NAME#v}" = "$(node -p 'require("./package.json").version')"
       - run: npm ci
       - run: npm run ci
       - run: npm test
+
+      # Next minor above the highest release tag on origin and package.json (which may move with upstream merges).
+      - name: Compute next version
+        id: version
+        run: |
+          tags=$(git ls-remote --tags --refs origin 'v*' | sed -nE 's#.*refs/tags/v([0-9]+\.[0-9]+\.[0-9]+)$#\1#p')
+          current=$(printf '%s\n' $tags "$(node -p 'require("./package.json").version')" | sort -V | tail -1)
+          next=$(echo "$current" | awk -F. '{ print $1 "." $2 + 1 ".0" }')
+          echo "Current: $current, next: $next"
+          echo "next=$next" >> "$GITHUB_OUTPUT"
+
+      - name: Set version
+        env:
+          NEXT: ${{ steps.version.outputs.next }}
+        run: |
+          npm version "$NEXT" --no-git-tag-version
+          sed -i -E "s/version: \"[0-9]+\.[0-9]+\.[0-9]+\"/version: \"$NEXT\"/" src/server.ts
+          grep -q "version: \"$NEXT\"" src/server.ts
+
       - run: npm publish
+
+      - name: Tag release
+        env:
+          NEXT: ${{ steps.version.outputs.next }}
+        run: |
+          git tag "v$NEXT" "$GITHUB_SHA"
+          git push origin "v$NEXT"
