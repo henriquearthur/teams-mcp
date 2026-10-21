@@ -13,12 +13,12 @@ Personal fork of [floriscornel/teams-mcp](https://github.com/floriscornel/teams-
   - `.github/copilot-instructions.md` changed upstream: port the relevant change into this file, keep the Copilot file deleted.
   - Codecov steps in `ci.yml`: keep them out; the fork has no Codecov token.
   - `package.json` `version` and the `McpServer` `version` in `src/server.ts`: take upstream's; the fork never commits version bumps (see Release).
-- Tags: `upstream` is configured with `tagOpt --no-tags` (`git config remote.upstream.tagOpt --no-tags`, per clone), so `origin` holds only the fork's release tags.
+- Tags: `upstream` is configured with `tagOpt --no-tags` (`git config remote.upstream.tagOpt --no-tags`, per clone), so new tags on `origin` are only the fork's releases.
 - Contributing back: for a change worth sending upstream, branch from `upstream/main`, keep the fork's package rename out of the diff, and open the PR with `--repo floriscornel/teams-mcp`.
 
 ## Release
 
-Every push to `main` publishes a new minor to npm through `.github/workflows/release.yml`; pushes touching only docs (`**.md`, `.mcp.json`, `.vscode/`, `dependabot.yml`) are skipped, and `workflow_dispatch` forces a run. The workflow takes the higher of the latest npm version and `package.json` `version`, bumps its minor, writes it into `package.json` and `src/server.ts` in the runner only, publishes via npm trusted publishing (OIDC, no token), and pushes the `vX.Y.0` tag. Version bumps are never committed, which keeps `package.json` free of conflicts with upstream.
+Every push to `main` publishes a new minor to npm through `.github/workflows/release.yml`; pushes touching only docs (`**.md`, `.mcp.json`, `.vscode/`, `dependabot.yml`) are skipped, and `workflow_dispatch` forces a run. The workflow takes the higher of the latest `vX.Y.Z` tag on `origin` and `package.json` `version`, bumps its minor, writes it into `package.json` and `src/server.ts` in the runner only, publishes via npm trusted publishing (OIDC, no token), and pushes the `vX.Y.0` tag. Version bumps are never committed, which keeps `package.json` free of conflicts with upstream.
 
 ## Architecture
 

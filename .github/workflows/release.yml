@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   publish-npm:
-    if: github.repository == 'henriquearthur/teams-mcp'
+    if: github.repository == 'henriquearthur/teams-mcp' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,19 +34,14 @@ jobs:
       - run: npm run ci
       - run: npm test
 
-      # Next minor above both the latest published version and package.json (which may move with upstream merges).
+      # Next minor above the highest release tag on origin and package.json (which may move with upstream merges).
       - name: Compute next version
         id: version
         run: |
-          published=$(curl -sf "https://registry.npmjs.org/-/package/@henriquearthur%2fteams-mcp/dist-tags" \
-            | node -p 'JSON.parse(require("fs").readFileSync(0)).latest' || echo 0.0.0)
-          next=$(node -e '
-            const parse = (v) => v.split(".").map(Number);
-            const [a, b] = [parse(process.argv[1]), parse(require("./package.json").version)];
-            const [major, minor] = (a[0] - b[0] || a[1] - b[1] || a[2] - b[2]) >= 0 ? a : b;
-            console.log(`${major}.${minor + 1}.0`);
-          ' "$published")
-          echo "Published: $published, next: $next"
+          tags=$(git ls-remote --tags --refs origin 'v*' | sed -nE 's#.*refs/tags/v([0-9]+\.[0-9]+\.[0-9]+)$#\1#p')
+          current=$(printf '%s\n' $tags "$(node -p 'require("./package.json").version')" | sort -V | tail -1)
+          next=$(echo "$current" | awk -F. '{ print $1 "." $2 + 1 ".0" }')
+          echo "Current: $current, next: $next"
           echo "next=$next" >> "$GITHUB_OUTPUT"
 
       - name: Set version
