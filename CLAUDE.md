@@ -20,8 +20,10 @@ Personal fork of [floriscornel/teams-mcp](https://github.com/floriscornel/teams-
 
 `.github/workflows/release.yml` publishes to npm on a `v*` tag pushed to `henriquearthur/teams-mcp`, via npm trusted publishing (OIDC, no token). The tag must equal `package.json` `version`; the workflow fails otherwise.
 
-1. Bump `version` in `package.json` and the `McpServer` `version` in `src/server.ts`; run `npm install --package-lock-only`.
+1. Bump `version` in `package.json` and the `McpServer` `version` in `src/server.ts`; run `npm install --package-lock-only`. Tags `v0.9.0`–`v1.0.1` on `origin` came from upstream, so fork versions start above `1.0.1`.
 2. Merge to `main`, then `git tag vX.Y.Z && git push origin vX.Y.Z`.
+
+Trusted publishing is configured per existing package on npmjs.com, so the package's first version is published by hand (`npm login && npm publish`); after that, add `henriquearthur/teams-mcp` + `release.yml` as the trusted publisher in the package settings.
 
 ## Architecture
 

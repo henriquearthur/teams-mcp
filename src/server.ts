@@ -29,7 +29,7 @@ async function readAuthInfo(): Promise<Record<string, unknown> | undefined> {
 export async function createMcpServer(readOnly: boolean): Promise<McpServer> {
   const server = new McpServer({
     name: "teams-mcp",
-    version: "1.0.0",
+    version: "1.0.2",
   });
 
   // Initialize Graph service (singleton)
