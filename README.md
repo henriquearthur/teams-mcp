@@ -1,16 +1,11 @@
 # Teams MCP
 
-[![npm version](https://img.shields.io/npm/v/@floriscornel/teams-mcp.svg)](https://www.npmjs.com/package/@floriscornel/teams-mcp)
-[![npm downloads](https://img.shields.io/npm/dm/@floriscornel/teams-mcp.svg)](https://www.npmjs.com/package/@floriscornel/teams-mcp)
-[![codecov](https://codecov.io/gh/floriscornel/teams-mcp/graph/badge.svg)](https://app.codecov.io/gh/floriscornel/teams-mcp)
+[![npm version](https://img.shields.io/npm/v/@henriquearthur/teams-mcp.svg)](https://www.npmjs.com/package/@henriquearthur/teams-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/floriscornel/teams-mcp.svg)](https://github.com/floriscornel/teams-mcp/stargazers)
 
 A Model Context Protocol (MCP) server that provides seamless integration with Microsoft Graph APIs, enabling AI assistants to interact with Microsoft Teams, users, chats, files, and organizational data.
 
-<a href="https://glama.ai/mcp/servers/@floriscornel/teams-mcp">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@floriscornel/teams-mcp/badge" alt="Teams MCP server" />
-</a>
+> **Fork notice:** this is a personal fork of [Teams MCP](https://github.com/floriscornel/teams-mcp) by [Floris Cornel](https://github.com/floriscornel), maintained for my own needs and published as `@henriquearthur/teams-mcp`. All credit for the original project goes to its author. Changes of general interest are contributed back upstream.
 
 ## 📦 Installation
 
@@ -21,7 +16,7 @@ To use this MCP server in Cursor/Claude/VS Code, add the following configuration
   "mcpServers": {
     "teams-mcp": {
       "command": "npx",
-      "args": ["-y", "@floriscornel/teams-mcp@latest"]
+      "args": ["-y", "@henriquearthur/teams-mcp@latest"]
     }
   }
 }
@@ -261,13 +256,13 @@ npm run auth
 **Full access:**
 
 ```bash
-npx @floriscornel/teams-mcp@latest authenticate
+npx @henriquearthur/teams-mcp@latest authenticate
 ```
 
 **Read-only access:**
 
 ```bash
-npx @floriscornel/teams-mcp@latest authenticate --read-only
+npx @henriquearthur/teams-mcp@latest authenticate --read-only
 ```
 
 **Direct token injection with an existing Microsoft Graph JWT:**
@@ -277,7 +272,7 @@ npx @floriscornel/teams-mcp@latest authenticate --read-only
   "mcpServers": {
     "teams-mcp": {
       "command": "npx",
-      "args": ["-y", "@floriscornel/teams-mcp@latest"],
+      "args": ["-y", "@henriquearthur/teams-mcp@latest"],
       "env": {
         "AUTH_TOKEN": "<jwt-for-https://graph.microsoft.com>"
       }
@@ -308,12 +303,12 @@ TEAMS_MCP_READ_ONLY=true node dist/index.js
 ### CLI Commands
 
 ```bash
-npx @floriscornel/teams-mcp@latest authenticate              # Authenticate with full scopes
-npx @floriscornel/teams-mcp@latest authenticate --read-only  # Authenticate with read-only scopes
-npx @floriscornel/teams-mcp@latest check                     # Check authentication status
-npx @floriscornel/teams-mcp@latest logout                    # Clear authentication
-npx @floriscornel/teams-mcp@latest auth                      # Alias for authenticate
-npx @floriscornel/teams-mcp@latest                           # Start MCP server (default)
+npx @henriquearthur/teams-mcp@latest authenticate              # Authenticate with full scopes
+npx @henriquearthur/teams-mcp@latest authenticate --read-only  # Authenticate with read-only scopes
+npx @henriquearthur/teams-mcp@latest check                     # Check authentication status
+npx @henriquearthur/teams-mcp@latest logout                    # Clear authentication
+npx @henriquearthur/teams-mcp@latest auth                      # Alias for authenticate
+npx @henriquearthur/teams-mcp@latest                           # Start MCP server (default)
 ```
 
 ### Environment Variables
@@ -335,7 +330,7 @@ By default the server authenticates through Microsoft's public Graph CLI app. To
 ```bash
 TEAMS_MCP_CLIENT_ID=<your-app-id> \
 TEAMS_MCP_TENANT_ID=<your-tenant-id> \
-npx @floriscornel/teams-mcp@latest authenticate
+npx @henriquearthur/teams-mcp@latest authenticate
 ```
 
 Set the same environment variables on the MCP server process so it can renew tokens with the same app identity.
@@ -360,7 +355,7 @@ The server supports a read-only mode that disables all write operations (sending
 
 **Authenticate with reduced scopes:**
 ```bash
-npx @floriscornel/teams-mcp@latest authenticate --read-only
+npx @henriquearthur/teams-mcp@latest authenticate --read-only
 ```
 
 **MCP server configuration (read-only):**
@@ -369,7 +364,7 @@ npx @floriscornel/teams-mcp@latest authenticate --read-only
   "mcpServers": {
     "teams-mcp": {
       "command": "npx",
-      "args": ["-y", "@floriscornel/teams-mcp@latest"],
+      "args": ["-y", "@henriquearthur/teams-mcp@latest"],
       "env": {
         "TEAMS_MCP_READ_ONLY": "true"
       }
@@ -380,7 +375,7 @@ npx @floriscornel/teams-mcp@latest authenticate --read-only
 
 **Switching modes:** When switching from read-only to full mode, the server detects the scope mismatch and warns you to re-authenticate:
 ```bash
-npx @floriscornel/teams-mcp@latest authenticate
+npx @henriquearthur/teams-mcp@latest authenticate
 ```
 
 **Read-only tools (16):**
@@ -442,22 +437,22 @@ First, authenticate with Microsoft Graph:
 
 ```bash
 # Full access (default)
-npx @floriscornel/teams-mcp@latest authenticate
+npx @henriquearthur/teams-mcp@latest authenticate
 
 # Read-only (reduced permission scopes)
-npx @floriscornel/teams-mcp@latest authenticate --read-only
+npx @henriquearthur/teams-mcp@latest authenticate --read-only
 ```
 
 Check your authentication status:
 
 ```bash
-npx @floriscornel/teams-mcp@latest check
+npx @henriquearthur/teams-mcp@latest check
 ```
 
 Logout if needed:
 
 ```bash
-npx @floriscornel/teams-mcp@latest logout
+npx @henriquearthur/teams-mcp@latest logout
 ```
 
 ### Chat Pagination Example
@@ -512,7 +507,7 @@ This MCP server is designed to work with AI assistants like Claude/Cursor/VS Cod
   "mcpServers": {
     "teams-mcp": {
       "command": "npx",
-      "args": ["-y", "@floriscornel/teams-mcp@latest"]
+      "args": ["-y", "@henriquearthur/teams-mcp@latest"]
     }
   }
 }
@@ -531,19 +526,8 @@ This MCP server is designed to work with AI assistants like Claude/Cursor/VS Cod
 
 ## 📝 License
 
-MIT License - see LICENSE file for details
+MIT License - see [LICENSE](LICENSE) for details. Originally created by Floris Cornel; fork maintained by Henrique Arthur.
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run build, linting, and tests
-5. Submit a pull request
-
-## 📞 Support
-
-For issues and questions:
-- Check the existing GitHub issues
-- Review Microsoft Graph API documentation
-- Ensure proper authentication and permissions are configured
+Issues and pull requests for this fork go to [henriquearthur/teams-mcp](https://github.com/henriquearthur/teams-mcp). For the original project, see [floriscornel/teams-mcp](https://github.com/floriscornel/teams-mcp).

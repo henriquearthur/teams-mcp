@@ -1,7 +1,7 @@
 {
-  "name": "@floriscornel/teams-mcp",
-  "version": "1.0.1",
-  "description": "MCP server for Microsoft Graph Teams integration",
+  "name": "@henriquearthur/teams-mcp",
+  "version": "1.0.2",
+  "description": "MCP server for Microsoft Graph Teams integration (fork of @floriscornel/teams-mcp)",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -41,15 +41,18 @@
     "teams",
     "model-context-protocol"
   ],
-  "author": "Floris Cornel",
+  "author": "Henrique Arthur",
+  "contributors": [
+    "Floris Cornel (original author, https://github.com/floriscornel/teams-mcp)"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/floriscornel/teams-mcp.git"
+    "url": "git+https://github.com/henriquearthur/teams-mcp.git"
   },
-  "homepage": "https://github.com/floriscornel/teams-mcp#readme",
+  "homepage": "https://github.com/henriquearthur/teams-mcp#readme",
   "bugs": {
-    "url": "https://github.com/floriscornel/teams-mcp/issues"
+    "url": "https://github.com/henriquearthur/teams-mcp/issues"
   },
   "dependencies": {
     "@azure/identity": "^4.13.1",

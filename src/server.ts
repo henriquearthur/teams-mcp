@@ -29,7 +29,7 @@ async function readAuthInfo(): Promise<Record<string, unknown> | undefined> {
 export async function createMcpServer(readOnly: boolean): Promise<McpServer> {
   const server = new McpServer({
     name: "teams-mcp",
-    version: "1.0.0",
+    version: "1.0.2",
   });
 
   // Initialize Graph service (singleton)
@@ -53,12 +53,12 @@ export async function createMcpServer(readOnly: boolean): Promise<McpServer> {
           "⚠️  Warning: You authenticated with read-only scopes but the server is running in full mode."
         );
         console.error("   Write operations may fail. Re-authenticate without --read-only:");
-        console.error("   npx @floriscornel/teams-mcp@latest authenticate");
+        console.error("   npx @henriquearthur/teams-mcp@latest authenticate");
       } else if (!grantedScopes) {
         console.error(
           "⚠️  Warning: Could not determine granted scopes. If you experience permission errors,"
         );
-        console.error("   re-authenticate: npx @floriscornel/teams-mcp@latest authenticate");
+        console.error("   re-authenticate: npx @henriquearthur/teams-mcp@latest authenticate");
       }
     }
   }

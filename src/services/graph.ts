@@ -153,7 +153,7 @@ export class GraphService {
 
     if (!result) {
       throw new Error(
-        "Failed to acquire access token. Please re-authenticate: npx @floriscornel/teams-mcp@latest authenticate"
+        "Failed to acquire access token. Please re-authenticate: npx @henriquearthur/teams-mcp@latest authenticate"
       );
     }
 
@@ -187,7 +187,7 @@ export class GraphService {
 
     if (!this.client) {
       throw new Error(
-        "Not authenticated. Please run the authentication CLI tool first: npx @floriscornel/teams-mcp@latest authenticate"
+        "Not authenticated. Please run the authentication CLI tool first: npx @henriquearthur/teams-mcp@latest authenticate"
       );
     }
     return this.client;
