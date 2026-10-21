@@ -66,7 +66,7 @@ describe("Authentication Tools", () => {
         content: [
           {
             type: "text",
-            text: "❌ Not authenticated. Please run: npx @floriscornel/teams-mcp@latest authenticate",
+            text: "❌ Not authenticated. Please run: npx @henriquearthur/teams-mcp@latest authenticate",
           },
         ],
       });

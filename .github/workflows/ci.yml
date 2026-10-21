@@ -37,24 +37,7 @@ jobs:
 
       - name: Run tests with JUnit output
         run: |
-          # Run tests with coverage and generate JUnit XML for Codecov Test Analytics
           npm run test:coverage:ci
-
-      - name: Upload coverage to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@v7
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/coverage-final.json
-          fail_ci_if_error: false
-          verbose: true
-
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./test-results.xml
 
       - name: Build
         run: npm run build
@@ -65,8 +48,8 @@ jobs:
           mkdir /tmp/consumer && cd /tmp/consumer
           npm init -y > /dev/null
           npm install /tmp/pkg/*.tgz
-          node node_modules/@floriscornel/teams-mcp/dist/index.js --help
-          node node_modules/@floriscornel/teams-mcp/dist/index.js check
+          node node_modules/@henriquearthur/teams-mcp/dist/index.js --help
+          node node_modules/@henriquearthur/teams-mcp/dist/index.js check
 
       - name: Test CLI functionality
         run: |
